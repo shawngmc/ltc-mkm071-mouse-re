@@ -1,8 +1,15 @@
 #!/bin/bash
 # Read-only: reads standard GATT values (device info, HID info, Report Reference
 # descriptors, battery level) from the paired MKM071. Writes and notifies nothing.
-# Usage: bash tools/bt_gatt_read.sh > gatt_read.txt 2>&1     (mouse connected over Bluetooth)
-D=/org/bluez/hci0/dev_F4_EE_25_43_AF_01
+# Usage: bash tools/bt_gatt_read.sh AA:BB:CC:DD:EE:FF [hci0] > captures/gatt_read.txt 2>&1
+#        (mouse connected over Bluetooth; find the address with `bluetoothctl devices`)
+# The service/characteristic handles below were recorded on one MKM071 and may differ on others.
+if [[ ! $1 =~ ^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$ ]]; then
+  echo "usage: $0 <mouse bluetooth address> [adapter, default hci0]" >&2
+  exit 1
+fi
+MAC=${1^^}
+D=/org/bluez/${2:-hci0}/dev_${MAC//:/_}
 S=$D/service001b
 {
   echo "menu gatt"; sleep 1

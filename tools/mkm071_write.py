@@ -11,18 +11,18 @@ Safety flow for every write:
   2. Save a full backup JSON (matrix, option blocks, profile) before touching anything.
   3. Dry run by default; nothing is sent without --yes.
   4. After writing, re-read the matrix and report whether the slot really changed.
-  5. --restore BACKUP.json writes back every slot that differs from the backup.
+  5. --restore BACKUP.json (saved in captures/, see --backup-dir) writes back every slot that differs from the backup.
 
 Usage (mouse wired, same venv as the probe):
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --backup-only
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0          # dry run
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0 --yes
-  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore captures/backup-XXXX.json --yes
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-dpi 0,1000 --yes     # stage 0 -> 1000 DPI
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-stage-color 0,FF8000 --yes   # DPI stage colour
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-stage 2 --yes                 # active stage
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --profile 2 --set-slot 7 --action 0,0,34,0 --yes   # edit profile 2 without switching
-  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes   # all five profiles + option block 0
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore captures/backup-XXXX.json --yes   # all five profiles + option block 0
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-opt0 rate=500,debounce=4 --yes
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --profile 0 --set-report-rate 500 --yes
   sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-light always,FF0000,4 --yes
@@ -32,10 +32,13 @@ Action bytes are [type, 0, code, arg]; e.g. 0,0,34,0 = keyboard key '5' (HID 0x2
 import argparse
 import datetime
 import json
+import os
 import sys
 import time
 
 import mkm071_probe as P
+
+CAPTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "captures")
 
 OP_SET_SLOT = 0x50
 OP_SET_OPT1 = 0x54
@@ -495,6 +498,7 @@ def main():
     ap.add_argument("--clear-macro", type=int, metavar="IDX", help="write an empty macro to slot IDX")
     ap.add_argument("--set-light", metavar="SPEC", help="e.g. always,FF0000,4")
     ap.add_argument("--restore", metavar="BACKUP.json")
+    ap.add_argument("--backup-dir", default=CAPTURES, help="where backups are saved (default: repo captures/)")
     ap.add_argument("--yes", action="store_true", help="actually send writes")
     ap.add_argument("--force-model", action="store_true")
     ap.add_argument("--selftest", action="store_true")
@@ -508,7 +512,9 @@ def main():
         if bk["model_id"] != MKM071_ID and not a.force_model:
             sys.exit("model id %d is not MKM071 (%d); refusing (use --force-model)"
                      % (bk["model_id"], MKM071_ID))
-        name = "backup-%s.json" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        os.makedirs(a.backup_dir, exist_ok=True)
+        name = os.path.join(os.path.normpath(a.backup_dir),
+                            "backup-%s.json" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
         with open(name, "w") as f:
             json.dump(bk, f, indent=2)
         print("backup saved:", name)

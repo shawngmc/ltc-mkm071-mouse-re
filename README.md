@@ -41,7 +41,7 @@ The scripts in `tools/` import `mkm071_probe` from that same folder, so keep the
 | `dongle_enum.py` | Reads only | Dongle descriptors, report descriptors and GET_REPORT for each report ID |
 | `dongle_try.py` | Reads, `FE` frame | Dongle report-5 listening and framing experiments |
 | `bt_ids.py` | Nothing | Records the Bluetooth identity and HID descriptors of a paired mouse |
-| `bt_gatt_read.sh` | GATT reads | Reads the standard GATT values through bluetoothctl (device path is hardcoded) |
+| `bt_gatt_read.sh` | GATT reads | Reads the standard GATT values through bluetoothctl; takes the mouse address |
 
 **evdev observers (no device commands)**
 
@@ -51,7 +51,7 @@ The scripts in `tools/` import `mkm071_probe` from that same folder, so keep the
 | `mouse_events.py` | Button and motion events with timing (macro mouse events) |
 | `rate_check.py` | Packets per second and motion totals (report rate, sensitivity) |
 
-Put tool output in `captures/`. Git ignores everything in it, and also ignores backup JSONs anywhere in the repo.
+Put tool output in `captures/`. The writers save their backups there by default (`--backup-dir` to change). Git ignores everything in it, and also ignores backup JSONs anywhere in the repo.
 
 ## Safety
 

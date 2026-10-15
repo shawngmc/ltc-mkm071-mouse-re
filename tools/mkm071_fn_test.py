@@ -6,7 +6,7 @@ base matrix (0xD0 / 0x50), or unusable? This writes ONE slot of the FN layer (de
 an unused wheel-tilt slot on this mouse), reads both matrices, reports which one changed,
 then puts everything back. Same safety flow as mkm071_write.py:
   1. model id (0x8F) must be 1833 unless --force-model
-  2. both matrices are saved to fn-backup-*.json first
+  2. both matrices are saved to captures/fn-backup-*.json first (--backup-dir)
   3. dry run by default; nothing is sent without --yes
   4. after the write both matrices are re-read and compared
   5. the original value is written back automatically (0x51 for the FN layer, 0x50 for the base
@@ -15,11 +15,13 @@ Only slot writes (0x51, plus 0x50 if needed to undo) are ever sent. No other wri
 
   sudo .venv/bin/python tools/mkm071_fn_test.py                  # dry run
   sudo .venv/bin/python tools/mkm071_fn_test.py --yes
-  sudo .venv/bin/python tools/mkm071_fn_test.py --restore fn-backup-XXXX.json --yes
+  sudo .venv/bin/python tools/mkm071_fn_test.py --restore captures/fn-backup-XXXX.json --yes
 """
-import argparse, datetime, json, sys, time
+import argparse, datetime, json, os, sys, time
 
 import mkm071_probe as P
+
+CAPTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "captures")
 
 OP_SET_FN = 0x51
 OP_SET_BASE = 0x50
@@ -100,7 +102,9 @@ def run(link, a):
         ok = b == ob and f == of
         print("restore: %s" % ("OK" if ok else "NOT FULLY RESTORED - compare with the backup"))
         return 0 if ok else 1
-    name = "fn-backup-%s.json" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    os.makedirs(a.backup_dir, exist_ok=True)
+    name = os.path.join(os.path.normpath(a.backup_dir),
+                        "fn-backup-%s.json" % datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
     json.dump({"profile": profile, "base_hex": base0.hex(), "fn_hex": fn0.hex()}, open(name, "w"), indent=2)
     print("backup saved:", name)
     action = [int(x, 0) for x in a.action.split(",")]
@@ -141,6 +145,7 @@ def main():
     ap.add_argument("--action", default="0,0,34,0", help="four bytes (default: key '5')")
     ap.add_argument("--keep", action="store_true", help="do not restore automatically")
     ap.add_argument("--restore", metavar="FN-BACKUP.json")
+    ap.add_argument("--backup-dir", default=CAPTURES, help="where backups are saved (default: repo captures/)")
     ap.add_argument("--yes", action="store_true")
     ap.add_argument("--force-model", action="store_true")
     a = ap.parse_args()
