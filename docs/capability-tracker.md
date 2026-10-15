@@ -123,7 +123,7 @@ Back up the device config before any write test, and treat firmware-update and f
 
 ## Static analysis findings
 
-GearMaster 470.1.80 builds every command in its JS, so most rows above already have an opcode and byte layout; none is verified on hardware, so the dropdowns are untouched. Full spec: mkm071-protocol.md in the project.
+GearMaster 470.1.80 builds every command in its JS, so most rows above already have an opcode and byte layout; none is verified on hardware, so the dropdowns are untouched. Full spec: [protocol.md](protocol.md).
 
 | Capability | Opcode (set / get) | Where it lives | Confidence |
 | --- | --- | --- | --- |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only probe for Rongyuan-family mice (LTC MKM071 / GM025 / ...).
 
-Protocol notes: see PROTOCOL.md (derived from static analysis of GearMaster 470.1.80).
+Protocol notes: see docs/protocol.md (derived from static analysis of GearMaster 470.1.80).
 Nothing here has been verified against a command reply from hardware yet.
 
 Safety: this tool only sends opcodes from READ_OPCODES (device ID, firmware,
@@ -9,11 +9,11 @@ profile, report rate, option blocks, button matrix). It has no write path, and i
 never sends bootloader, reset or firmware commands.
 
 Usage:
-  python3 mkm071_probe.py --selftest      # offline parser/checksum tests
-  python3 mkm071_probe.py --desc          # read HID report descriptors from sysfs (no device access)
-  python3 mkm071_probe.py --list          # list hidapi interfaces for VID 3151
-  python3 mkm071_probe.py --dump          # query via hidapi/hidraw
-  sudo python3 mkm071_probe.py --dump --usb [--pid 0x4027] [--iface 2] [--rid 0]
+  python3 tools/mkm071_probe.py --selftest      # offline parser/checksum tests
+  python3 tools/mkm071_probe.py --desc          # read HID report descriptors from sysfs (no device access)
+  python3 tools/mkm071_probe.py --list          # list hidapi interfaces for VID 3151
+  python3 tools/mkm071_probe.py --dump          # query via hidapi/hidraw
+  sudo python3 tools/mkm071_probe.py --dump --usb [--pid 0x4027] [--iface 2] [--rid 0]
                                            # query via libusb control transfers
 
 --usb is needed when the config interface has no hidraw node (the 2.4G dongle
@@ -33,7 +33,7 @@ USAGE_PAGE = 0xFFFF
 USAGE = 0x02
 REPORT_LEN = 64  # payload bytes; the HID layer adds the report-ID byte
 
-# Whitelist of query-only opcodes (see PROTOCOL.md section 4)
+# Whitelist of query-only opcodes (see docs/protocol.md section 4)
 OP_GET_REV = 0x8F
 OP_GET_REPORT = 0x84   # report rate for the profile given in byte 1 (mouse class)
 OP_GET_PROFILE = 0x85  # current profile in reply byte 1 (0x84 only echoes the profile you ask about)

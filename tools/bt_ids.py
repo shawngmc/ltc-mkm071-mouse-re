@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only: record the Bluetooth identity of the MKM071 once it is paired.
-Needs mkm071_probe.py alongside. Sends nothing to the mouse.
-Usage: .venv/bin/python bt_ids.py > bt_ids.json"""
+Needs tools/mkm071_probe.py alongside. Sends nothing to the mouse.
+Usage: .venv/bin/python tools/bt_ids.py > bt_ids.json"""
 import glob, json, os, re, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mkm071_probe import parse_report_descriptor

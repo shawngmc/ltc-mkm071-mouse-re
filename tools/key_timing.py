@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Print timestamps of key/button events from an evdev node, with gaps between events.
-Usage: sudo .venv/bin/python key_timing.py            (lists keyboard-ish devices)
-       sudo .venv/bin/python key_timing.py /dev/input/eventN [seconds=15]
+Usage: sudo .venv/bin/python tools/key_timing.py            (lists keyboard-ish devices)
+       sudo .venv/bin/python tools/key_timing.py /dev/input/eventN [seconds=15]
 Press the macro key once; stops after <seconds>."""
 import struct, sys, time, select, os
 if len(sys.argv) < 2:

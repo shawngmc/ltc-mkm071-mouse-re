@@ -1,7 +1,7 @@
 #!/bin/bash
 # Read-only: reads standard GATT values (device info, HID info, Report Reference
 # descriptors, battery level) from the paired MKM071. Writes and notifies nothing.
-# Usage: bash bt_gatt_read.sh > gatt_read.txt 2>&1     (mouse connected over Bluetooth)
+# Usage: bash tools/bt_gatt_read.sh > gatt_read.txt 2>&1     (mouse connected over Bluetooth)
 D=/org/bluez/hci0/dev_F4_EE_25_43_AF_01
 S=$D/service001b
 {

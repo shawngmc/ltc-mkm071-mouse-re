@@ -2,9 +2,9 @@
 """Low-risk dongle experiments (3151:4027), only patterns GearMaster itself uses. Needs
 mkm071_probe.py in the same folder.  Everything is a read, a report-ID-5 listen, or the
 documented '[0xFE, n]' next-packet-length frame followed by the harmless 0x8F query.
-  sudo .venv/bin/python dongle_try.py --listen 20     # press DPI / profile buttons, wake/sleep the mouse
-  sudo .venv/bin/python dongle_try.py --getinput      # ask for input report 5 on the keyboard interface
-  sudo .venv/bin/python dongle_try.py --fe 8          # [FE 08] then 0x8F query"""
+  sudo .venv/bin/python tools/dongle_try.py --listen 20     # press DPI / profile buttons, wake/sleep the mouse
+  sudo .venv/bin/python tools/dongle_try.py --getinput      # ask for input report 5 on the keyboard interface
+  sudo .venv/bin/python tools/dongle_try.py --fe 8          # [FE 08] then 0x8F query"""
 import argparse, fcntl, glob, os, select, struct, sys, time
 import mkm071_probe as P
 

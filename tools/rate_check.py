@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Measure the mouse's effective report rate: count EV_REL motion packets per second.
-Usage: sudo .venv/bin/python rate_check.py [/dev/input/eventN] [seconds]
+Usage: sudo .venv/bin/python tools/rate_check.py [/dev/input/eventN] [seconds]
 Move the mouse in fast circles the whole time. With no path, lists candidate devices."""
 import struct, sys, time, select, os
 

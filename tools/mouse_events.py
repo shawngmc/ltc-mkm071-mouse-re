@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Log mouse evdev events (buttons, relative motion) with timestamps and gaps.
-Usage: sudo .venv/bin/python mouse_events.py               (lists mouse nodes)
-       sudo .venv/bin/python mouse_events.py /dev/input/eventN [seconds=15]
+Usage: sudo .venv/bin/python tools/mouse_events.py               (lists mouse nodes)
+       sudo .venv/bin/python tools/mouse_events.py /dev/input/eventN [seconds=15]
 Hold the mouse still, then press the macro key once."""
 import struct, sys, time, select, os
 if len(sys.argv) < 2:

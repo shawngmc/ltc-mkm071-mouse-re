@@ -13,9 +13,9 @@ then puts everything back. Same safety flow as mkm071_write.py:
      layer if it changed too) and verified; --keep skips this. --restore FILE restores by hand.
 Only slot writes (0x51, plus 0x50 if needed to undo) are ever sent. No other write opcodes.
 
-  sudo .venv/bin/python mkm071_fn_test.py                  # dry run
-  sudo .venv/bin/python mkm071_fn_test.py --yes
-  sudo .venv/bin/python mkm071_fn_test.py --restore fn-backup-XXXX.json --yes
+  sudo .venv/bin/python tools/mkm071_fn_test.py                  # dry run
+  sudo .venv/bin/python tools/mkm071_fn_test.py --yes
+  sudo .venv/bin/python tools/mkm071_fn_test.py --restore fn-backup-XXXX.json --yes
 """
 import argparse, datetime, json, sys, time
 

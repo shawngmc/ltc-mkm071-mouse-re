@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only: poll the active profile (query 0x85, ~10 Hz) and print every change with a timestamp.
-Needs mkm071_probe.py alongside; mouse wired.  Ctrl+C to stop.
-  sudo .venv/bin/python profile_watch.py [seconds=60]"""
+Needs tools/mkm071_probe.py alongside; mouse wired.  Ctrl+C to stop.
+  sudo .venv/bin/python tools/profile_watch.py [seconds=60]"""
 import sys, time
 import mkm071_probe as P
 

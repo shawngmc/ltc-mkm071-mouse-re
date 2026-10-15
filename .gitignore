@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MKM071 tool output: device backups and raw captures stay local
+backup-*.json
+fn-backup-*.json
+captures/*
+!captures/README.md

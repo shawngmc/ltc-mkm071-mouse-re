@@ -3,7 +3,7 @@
 Dumps descriptors, HID report descriptors (parsed for report IDs/sizes) and tries
 GET_REPORT (feature and input) for each report ID. Never sends SET_REPORT, never claims
 or detaches an interface. Optional --listen N reads raw input reports from hidraw nodes.
-Usage: sudo .venv/bin/python dongle_enum.py [--pid 0x4027] [--listen 10] > dongle_enum.txt"""
+Usage: sudo .venv/bin/python tools/dongle_enum.py [--pid 0x4027] [--listen 10] > dongle_enum.txt"""
 import argparse, glob, os, select, sys, time
 import usb.core, usb.util
 

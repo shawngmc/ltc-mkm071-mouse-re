@@ -14,18 +14,18 @@ Safety flow for every write:
   5. --restore BACKUP.json writes back every slot that differs from the backup.
 
 Usage (mouse wired, same venv as the probe):
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --backup-only
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0          # dry run
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0 --yes
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-dpi 0,1000 --yes     # stage 0 -> 1000 DPI
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-stage-color 0,FF8000 --yes   # DPI stage colour
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-stage 2 --yes                 # active stage
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --profile 2 --set-slot 7 --action 0,0,34,0 --yes   # edit profile 2 without switching
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes   # all five profiles + option block 0
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-opt0 rate=500,debounce=4 --yes
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --profile 0 --set-report-rate 500 --yes
-  sudo .venv/bin/python mkm071_write.py --pid 0x4026 --set-light always,FF0000,4 --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --backup-only
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0          # dry run
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-slot 7 --action 0,0,34,0 --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-dpi 0,1000 --yes     # stage 0 -> 1000 DPI
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-stage-color 0,FF8000 --yes   # DPI stage colour
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-stage 2 --yes                 # active stage
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --profile 2 --set-slot 7 --action 0,0,34,0 --yes   # edit profile 2 without switching
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --restore backup-XXXX.json --yes   # all five profiles + option block 0
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-opt0 rate=500,debounce=4 --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --profile 0 --set-report-rate 500 --yes
+  sudo .venv/bin/python tools/mkm071_write.py --pid 0x4026 --set-light always,FF0000,4 --yes
 Light spec: MODE[,RRGGBB[,BRIGHTNESS 0-4[,SPEED 0-4]]]; MODE = off|always|breath|neon|wave|dazzle|laser.
 Action bytes are [type, 0, code, arg]; e.g. 0,0,34,0 = keyboard key '5' (HID 0x22).
 """
