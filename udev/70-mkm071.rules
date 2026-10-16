@@ -1,0 +1,10 @@
+# LTC MKM071 (Rongyuan family, VID 3151): let the logged-in user reach the config channel
+# without root. Wired mouse 4026 (libusb, interface 2) and 2.4G dongle 4027 (hidraw, for
+# `mkm071 watch --dongle`). The number must sort before 73-seat-late.rules for uaccess to apply.
+#
+#   sudo cp udev/70-mkm071.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload && sudo udevadm trigger
+# then unplug and replug the mouse.
+
+SUBSYSTEM=="usb", ATTR{idVendor}=="3151", ATTR{idProduct}=="4026|4027", TAG+="uaccess"
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3151", ATTRS{idProduct}=="4026|4027", TAG+="uaccess"

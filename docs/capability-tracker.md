@@ -103,7 +103,7 @@ The listing promises 5 saved profiles, so the main question is whether settings 
 | Profile name | N/A | N/A | Not stored in the mouse as far as the GearMaster code shows: the mouse protocol has no name opcode, and profile or config names live in the app's local config list. Not tested on hardware |
 | Onboard memory layout and size | Not started | N/A | Address map, page size, checksum |
 | Commit or save-to-flash command | N/A | N/A | None needed: slot and DPI writes apply immediately, and a slot write survived an unplug and replug |
-| Macro storage (count, size, per-macro length) | Verified | Verified | 20 slots of 256 bytes, read as 4 pages (0x96) and written in 56-byte pages (0x16). Slot content is limited to 224 bytes by the page protocol (bytes 224 to 255 are never written). Four-page macro verified |
+| Macro storage (count, size, per-macro length) | Verified | Verified | 20 slots of 256 bytes, read as 4 pages (0x96) and written in 56-byte pages (0x16). Slot content is limited to 220 bytes plus the 4-byte terminator by the page protocol (bytes 224 to 255 are never written). Four-page macro verified |
 | Macro events (key down/up, delay, mouse action) | Verified | Verified | Key down/up, mouse buttons (F0 to F4) and relative moves (F9) verified. Delay unit is 1 ms, exact in both the 1-byte (1 to 127) and 4-byte u16 forms. The move dy byte is inverted: positive moves the cursor up |
 | Macro repeat and stop modes | Verified | Verified | Slot action 9,mode,macro,0. Mode 0 repeats N times, mode 1 is touch/toggle (tap to start, tap to stop), mode 2 is hold (repeats while held). Stopping mid-cycle releases the key at once |
 | Factory reset | N/A | Not started | Capture only; do not replay until a backup exists |

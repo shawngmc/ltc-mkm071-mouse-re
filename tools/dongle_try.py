@@ -5,7 +5,7 @@ documented '[0xFE, n]' next-packet-length frame followed by the harmless 0x8F qu
   sudo .venv/bin/python tools/dongle_try.py --listen 20     # press DPI / profile buttons, wake/sleep the mouse
   sudo .venv/bin/python tools/dongle_try.py --getinput      # ask for input report 5 on the keyboard interface
   sudo .venv/bin/python tools/dongle_try.py --fe 8          # [FE 08] then 0x8F query"""
-import argparse, fcntl, glob, os, select, struct, sys, time
+import argparse, fcntl, glob, os, select, time
 import mkm071_probe as P
 
 VID, PID = 0x3151, 0x4027

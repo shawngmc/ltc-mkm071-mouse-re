@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkm071"
+dynamic = ["version"]
+description = "Configuration library and tools for the LTC MKM071 mouse (Rongyuan family)"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = ["pyusb"]
+
+[project.optional-dependencies]
+hid = ["hidapi"]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+mkm071 = "mkm071.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "mkm071.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+# the experiment scripts are terse on purpose; only real errors are checked there
+"tools/*" = ["E401", "E402", "E501", "E701", "E702", "E731", "E741"]
+# expected output is easier to read on one line
+"tests/*" = ["E501"]

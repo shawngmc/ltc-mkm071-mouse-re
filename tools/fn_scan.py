@@ -2,7 +2,6 @@
 """Read-only: compare the base matrix (0xD0) and the FN-layer matrix (0xD1) for profiles 0..4.
 Sends only the query opcodes 0xD0 / 0xD1 (and 0x8F for the model check). Needs mkm071_probe.py.
   sudo .venv/bin/python tools/fn_scan.py > fn_scan.txt"""
-import sys
 import mkm071_probe as P
 
 link = P.UsbLink(pid=0x4026, iface=2)
